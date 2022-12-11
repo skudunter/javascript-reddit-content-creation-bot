@@ -3,7 +3,6 @@ import speak from "./src/tts.js";
 //import visual from "./src/visual.js";
 import colors from "colors";
 import readline from "readline";
-import { read } from "fs";
 import getRandomPost from "./src/utils.js";
 import fs from "fs";
 
@@ -37,6 +36,8 @@ async function main(subreddit) {
   
   fs.appendFileSync("output.txt", "title: " + post.title + "\n", (err) => {});
   text = post.title;
+  fs.appendFileSync("output.txt",post.description + '\n', (err) => {});
+  text += post.selftext;
   for (let i = 0; i < comments[1].data.children.length - 1; i++) {
     text += comments[1].data.children[i].data.body;
     fs.appendFileSync(
@@ -44,6 +45,9 @@ async function main(subreddit) {
       comments[1].data.children[i].data.body + "\n",
       (err) => {}
     );
+    if(i > 10){
+      break;
+    }
   }
   speak(text,'en','output.mp3');
   // let img = await visual.capture_post('askreddit', 'zhg9fu', 'whats_your_controversial_food_opinion');
