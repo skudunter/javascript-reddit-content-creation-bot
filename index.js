@@ -1,12 +1,56 @@
 import scraper from "./src/scraper.js";
-import speak from './src/tts.js';
-import visual from './src/visual.js';
+import speak from "./src/tts.js";
+//import visual from "./src/visual.js";
+import colors from "colors";
+import readline from "readline";
+import { read } from "fs";
+import getRandomPost from './src/utils.js'
+import fs from "fs";
 
-async function main() {
-  speak('This is a test', 'en', '../../reddit-bot/assets/audio/test.mp3');
-  let comments = await scraper.comments('AskReddit', 'zhp9r1', 'whats_a_womens_thing_men_should_absolutely_start')
-  // console.log(comments[1].data.children);
-  let img = await visual.capture_post('askreddit', 'zhg9fu', 'whats_your_controversial_food_opinion');
-  await visual.close_browser();
+let getSubredditNameInterface = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+console.clear();
+console.log('please use responsibly'.bold);
+console.log('');
+console.log("(╯°□°）╯︵ ┻━┻".rainbow);
+console.log('');
+
+getSubredditNameInterface.question(
+  "Select which subreddit you will use:".yellow,
+  async(subreddit) => {
+      await main(subreddit);
+  }
+);
+
+async function main(subreddit) {
+  console.clear();
+  let posts  = await scraper.posts(subreddit);
+  let post =  getRandomPost(posts);
+  let comments = await scraper.comments(
+    subreddit,
+    post.id
+  );
+  fs.writeFileSync('output.txt', '', function(){console.log('done')})
+
+  fs.appendFileSync("output.txt",'title: '+post.title+'\n', (err) => {
+    if (err) console.log(err);
+    else {
+      console.log("title written successfully\n");
+    }
+  });
+
+  for (let i = 0; i < comments[1].data.children.length-1; i++) {
+    fs.appendFileSync("output.txt",comments[1].data.children[i].data.body+'\n', (err) => {
+      if (err) console.log(err);
+      else {
+        console.log("File written successfully\n");
+      }
+    });
+  }
+  // let img = await visual.capture_post('askreddit', 'zhg9fu', 'whats_your_controversial_food_opinion');
+  // await visual.close_browser();
 }
-await main();
+
