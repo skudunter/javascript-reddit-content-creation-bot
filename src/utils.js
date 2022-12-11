@@ -3,11 +3,10 @@ const getRandomPost = (posts) => {
   let index = Math.round(getRandomValue(0, max));
   return {
     id: posts.data.children[index].data.id,
-    title:posts.data.children[index].data.title,
+    title: posts.data.children[index].data.title,
   };
 };
 export default getRandomPost;
 function getRandomValue(min, max) {
   return Math.random() * (max - min) + min;
 }
-
