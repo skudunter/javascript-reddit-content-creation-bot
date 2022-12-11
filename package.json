@@ -1,0 +1,22 @@
+{
+  "name": "reddit-bot",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "a bot to scrape reddit and use text to speech to automatically upload viral youtube shorts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Skudunter",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "fetch": "^1.1.0",
+    "fs": "^0.0.1-security",
+    "gtts": "^0.2.1",
+    "node-fetch": "^3.3.0",
+    "puppeteer": "^19.4.0",
+    "request-promise": "^4.2.6",
+    "text-to-speech-js": "^1.1.10"
+  }
+}
