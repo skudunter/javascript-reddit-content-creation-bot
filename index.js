@@ -46,6 +46,9 @@ async function main(subreddit) {
 
   for (let i = 0; i < comments[1].data.children.length - 1; i++) {
     subtext = utils.parseString(comments[1].data.children[i].data.body);
+    if (subtext[subtext.length] !== '.'){
+      subtext += '.';
+    }
     text += subtext;
     fs.appendFileSync(
       "output.txt",

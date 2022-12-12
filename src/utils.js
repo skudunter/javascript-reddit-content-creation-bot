@@ -1,6 +1,6 @@
 export default {
   parseString(input) {
-    return input.replace(/[^a-z0-9 .]/gi, "");
+    return input.replace(/[^a-z0-9 .$!?]/gi, "");
   },
   getRandomPost(posts) {
     let max = Math.round(posts.data.children.length * 0.5);
