@@ -6,19 +6,20 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node index.js"
+    "start": "node index.js"
   },
   "author": "Skudunter",
   "license": "MIT",
   "dependencies": {
+    "@google-cloud/text-to-speech": "^4.0.4",
     "cheerio": "^1.0.0-rc.12",
     "colors": "^1.4.0",
     "fetch": "^1.1.0",
     "fs": "^0.0.1-security",
+    "googleapis": "^109.0.1",
     "gtts": "^0.2.1",
     "node-fetch": "^3.3.0",
     "puppeteer": "^19.4.0",
-    "request-promise": "^4.2.6",
-    "text-to-speech-js": "^1.1.10"
+    "request-promise": "^4.2.6"
   }
 }
