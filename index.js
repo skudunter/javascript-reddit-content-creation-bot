@@ -3,7 +3,7 @@ import speak from "./src/tts.js";
 //import visual from "./src/visual.js";
 import colors from "colors";
 import readline from "readline";
-import getRandomPost from "./src/utils.js";
+import utils from "./src/utils.js";
 import fs from "fs";
 
 let getSubredditNameInterface = readline.createInterface({
@@ -28,24 +28,31 @@ getSubredditNameInterface.question(
 
 async function main(subreddit) {
   console.clear();
-  let text = '';
+  let text = "";
+  let subtext = "";
   let posts = await scraper.posts(subreddit);
-  let post = getRandomPost(posts);
+  let post = utils.getRandomPost(posts);
   let comments = await scraper.comments(subreddit, post.id);
+
   fs.writeFileSync("output.txt", "", function () {});
   
   fs.appendFileSync("output.txt", "title: " + post.title + "\n", (err) => {});
   text = post.title;
-  fs.appendFileSync("output.txt",post.description + '\n', (err) => {});
-  text += post.selftext;
+
+  if (post.description) {
+    fs.appendFileSync("output.txt", post.description + "\n", (err) => {});
+    text += post.selftext;
+  }
+
   for (let i = 0; i < comments[1].data.children.length - 1; i++) {
-    text += comments[1].data.children[i].data.body;
+    subtext = utils.parseString(comments[1].data.children[i].data.body);
+    text += subtext;
     fs.appendFileSync(
       "output.txt",
-      comments[1].data.children[i].data.body + "\n",
+      subtext + "\n",
       (err) => {}
     );
-    if(i > 10){
+    if (i > 10) {
       break;
     }
   }
@@ -53,4 +60,3 @@ async function main(subreddit) {
   // let img = await visual.capture_post('askreddit', 'zhg9fu', 'whats_your_controversial_food_opinion');
   // await visual.close_browser();
 }
-

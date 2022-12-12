@@ -11,6 +11,6 @@ async function speak(text) {
   };
   const [response] = await client.synthesizeSpeech(request);
   const writeFile = promisify(_writeFile);
-  await writeFile('./output.mp3', response.audioContent, 'binary');
+  await writeFile('./assets/audio/output.mp3', response.audioContent, 'binary');
 }
 export default speak;
