@@ -5,7 +5,7 @@
   "description": "a bot to scrape reddit and use text to speech to automatically upload viral youtube shorts",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": " node ./src/video.js",
     "start": "node index.js"
   },
   "author": "Skudunter",
@@ -15,9 +15,10 @@
     "cheerio": "^1.0.0-rc.12",
     "colors": "^1.4.0",
     "fetch": "^1.1.0",
+    "fluent-ffmpeg": "^2.1.2",
     "fs": "^0.0.1-security",
     "googleapis": "^109.0.1",
-    "gtts": "^0.2.1",
+    "gtts": "^0.1.1",
     "node-fetch": "^3.3.0",
     "puppeteer": "^19.4.0",
     "request-promise": "^4.2.6"

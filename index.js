@@ -59,7 +59,7 @@ async function main(subreddit) {
       break;
     }
   }
-  await speak(text);
+  // await speak(text);
   // let img = await visual.capture_post('askreddit', 'zhg9fu', 'whats_your_controversial_food_opinion');
   // await visual.close_browser();
 }
