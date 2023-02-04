@@ -16,6 +16,10 @@ export default {
       process.exit(0);
     }
   },
+   countWords(str) {
+    return str.split(" ").length;
+  }
+  
 };
 function getRandomValue(min, max) {
   return Math.random() * (max - min) + min;

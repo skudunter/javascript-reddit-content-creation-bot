@@ -10,11 +10,10 @@ Please note we have not included the pushing to youtube shorts because we dont w
 - tts.js:Converts the text to speech using the google text to speech API
 
 ## Todo
-- Setup subreddit scraping
-- Capture the data visually for use with YouTube
-- use text-to-speech to generate mp3 files for the data
-- clip a background from a mp4 file
-- figure out timings and use video editing to stitch together screenshots and sound
+- Setup algorithm for length of words < 186
+- Setup parseing to include comments on comments.
+- clip a background from a mp4 file as long as the mp3 file.
+- Gradually add text to the mp4 file insync with the sound.
 - upload to a youtube channel
 ## Usage
 ```sh

@@ -1,17 +1,22 @@
-import ffmpeg from 'fluent-ffmpeg';
+import ffmpeg from "fluent-ffmpeg";
 
-const joinFiles = async (audioFile, videoFile, outputFile) => {
+const replaceAudio = async (videoFile, audioFile, outputFile) => {
   return new Promise((resolve, reject) => {
     ffmpeg()
-      .input(audioFile)
       .input(videoFile)
+      .input(audioFile)
+      .outputOptions([
+        "-map 0:v:0",
+        "-map 1:a:0",
+        "-c:v copy",
+        "-c:a aac",
+        "-b:a 256k",
+        "-strict experimental",
+      ])
       .output(outputFile)
-      .on('end', () => resolve(outputFile))
-      .on('error', (err) => reject(err))
+      .on("end", () => resolve(outputFile))
+      .on("error", (err) => reject(err))
       .run();
-  });
+    });
 };
-
-joinFiles('./assets/audio/output.mp3', './assets/output/output.mp4', './assets/output/output.mp4')
-  .then(console.log)
-  .catch(console.error);
+export default replaceAudio;

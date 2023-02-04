@@ -20,7 +20,7 @@
     "googleapis": "^109.0.1",
     "gtts": "^0.1.1",
     "node-fetch": "^3.3.0",
-    "puppeteer": "^19.4.0",
+    "puppeteer": "^19.6.3",
     "request-promise": "^4.2.6"
   }
 }

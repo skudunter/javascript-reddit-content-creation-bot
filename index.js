@@ -1,10 +1,11 @@
 import scraper from "./src/scraper.js";
 import speak from "./src/tts.js";
-//import visual from "./src/visual.js";
+import visual from "./src/visual.js";
 import colors from "colors";
 import readline from "readline";
 import utils from "./src/utils.js";
 import fs from "fs";
+import replaceAudio from "./src/video.js";
 
 let getSubredditNameInterface = readline.createInterface({
   input: process.stdin,
@@ -29,13 +30,12 @@ getSubredditNameInterface.question(
 async function main(subreddit) {
   console.clear();
   let text = "";
+  let numWords = 0;
   let subtext = "";
   let posts = await scraper.posts(subreddit);
   let post = utils.getRandomPost(posts);
   let comments = await scraper.comments(subreddit, post.id);
 
-  fs.writeFileSync("output.txt", "", function () {});
-  
   fs.appendFileSync("output.txt", "title: " + post.title + "\n", (err) => {});
   text = post.title;
 
@@ -43,23 +43,20 @@ async function main(subreddit) {
     fs.appendFileSync("output.txt", post.description + "\n", (err) => {});
     text += post.selftext;
   }
-
+  numWords = utils.countWords(text);
   for (let i = 0; i < comments[1].data.children.length - 1; i++) {
     subtext = utils.parseString(comments[1].data.children[i].data.body);
-    if (subtext[subtext.length] !== '.'){
-      subtext += '.';
+    if (subtext[subtext.length] !== ".") {
+      subtext += ".";
     }
     text += subtext;
-    fs.appendFileSync(
-      "output.txt",
-      subtext + "\n",
-      (err) => {}
-    );
-    if (i > 10) {
+    numWords = utils.countWords(text);
+    fs.appendFileSync("output.txt", subtext + "\n", (err) => {});
+    if (numWords > 183) {
       break;
     }
   }
-  // await speak(text);
-  // let img = await visual.capture_post('askreddit', 'zhg9fu', 'whats_your_controversial_food_opinion');
-  // await visual.close_browser();
+  //await speak(text);
+  await visual.capture_post(subreddit, post.id, post.title);
+  await visual.close_browser();
 }
