@@ -1,7 +1,6 @@
 import { writeFile as _writeFile } from "fs";
 import { promisify } from "util";
 import { TextToSpeechClient } from "@google-cloud/text-to-speech";
-
 async function speak(text) {
   const client = new TextToSpeechClient();
   const request = {

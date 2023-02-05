@@ -1,33 +1,54 @@
 import puppeteer from "puppeteer";
-const browser = await puppeteer.launch({ headless: false });
 
-export default {
-  async capture_post(subreddit, id, name) {
-    let page = await browser.newPage();
-    await page.goto(
-      `https://www.reddit.com/r/${subreddit}/comments/${id}/${name}`
-    );
-    await page.waitForSelector(`#USER_DROPDOWN_ID`);
-    let post = await page.$(`#t3_${id}`);
+async function capturePost(subreddit, postId, postTitle,numComments) {
+  const browser = await puppeteer.launch({ headless: false });
+  const page = await browser.newPage();
+  await page.goto(
+    `https://www.reddit.com/r/${subreddit}/comments/${postId}/${postTitle}/`
+  );
 
-    await page.evaluate((id) => {
-      let formatPost = (id) => {
-        document.querySelector("#USER_DROPDOWN_ID").click();
-        let question = document.querySelector(`#t3_${id}`);
-        let options = question.children[0].children[4];
-        for (i = 1; i < options.children[0].childElementCount; i++) {
-          options.children[0].children[i].style.display = "none";
-        }
-        document.querySelector("[role=switch]").click();
-        options.children[3].style.display = "none";
-        question.children[0].children[1].children[1].style.display = "none";
-      };
-      formatPost(id);
-    }, id);
-    await post.screenshot({ path: "./assets/images/title.png" });
-  },
-  async capture_comment() {},
-  async close_browser() {
-    await browser.close();
-  },
-};
+  const title = await page.$(
+    `#t3_${postId} > div > div:nth-child(3) > div > div > h1`
+  );
+
+  let { x, y, width, height } = await title.boundingBox();
+  await page.screenshot({
+    clip: {
+      x,
+      y,
+      width,
+      height,
+    },
+    path: "./assets/images/title.jpg",
+  });
+
+  let comments = await page.$$(`.${await page.$('.Comment').classList[4]}`);
+
+  for (let i = 0; i < numComments; i++) {
+    // let element = await page.$(
+    //   `#t1_${comments[i]} > div:nth-child(2) > div:nth-child(4) > div:nth-child(3) > div > p`
+    // );
+    element = comments[i]
+    let { x, y, width, height } = await element.boundingBox();
+    setTimeout(async () => {
+      await page.screenshot({
+        clip: {
+          x,
+          y,
+          width,
+          height,
+        },
+        path: `./assets/images/${i}.jpg`,
+      });
+    }, 1000 * i);
+  }
+  await browser.close();
+}
+export default capturePost;
+
+// await capture_post(
+//   "askreddit",
+//   "10udqhv",
+//   "what_film_made_you_say_holy_shit_there_is_still",
+//   []
+// );
