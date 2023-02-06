@@ -127,11 +127,3 @@ async function capturePost(subreddit, postId, postTitle, mainCommentCount, subCo
   });
 }
 export default capturePost;
-
-await capturePost(
-  "askreddit",
-  "10udqhv",
-  "what_film_made_you_say_holy_shit_there_is_still",
-  3,
-  3
-)
