@@ -19,7 +19,7 @@ getSubredditNameInterface.question(
   async (subreddit) => {
     getSubredditNameInterface.close();
     await main(subreddit);
-    console.log("MISSION SUCESS".green);
+    console.log("MISSION SUCCESS".green);
   }
 );
 
@@ -58,5 +58,5 @@ async function main(subreddit) {
   }
   console.log(commentsId);
   await speak(text);
-  await capturePost(subreddit, post.id, post.title,commentsId.length);
+  await capturePost(subreddit, post.id, post.title, 5, 3);
 }
