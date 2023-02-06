@@ -113,12 +113,12 @@ async function capturePost(subreddit, postId, postTitle, mainCommentCount, subCo
           element.scrollIntoView();
         }, subcomment);
         await page.screenshot({
-          path: `./assets/images/comments/${comment.main}/$test.jpg`
+          path: `./assets/images/comments/${comment.main}/test.jpg`
         });
         await sub.screenshot({
           path: `./assets/images/comments/${comment.main}/${index}.jpg`
         });
-        fs.rm(`./assets/images/comments/${comment.main}/$test.jpg`, err => {
+        fs.rm(`./assets/images/comments/${comment.main}/test.jpg`, err => {
           if (err) throw err;
         })
       }
