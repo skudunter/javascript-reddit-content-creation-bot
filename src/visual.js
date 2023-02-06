@@ -11,7 +11,7 @@ import fs from 'fs';
  * @param {number} subCommentCount  The amount of sub-comments to be captured
  */
 async function capturePost(subreddit, postId, postTitle, mainCommentCount, subCommentCount) {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(
     `https://www.reddit.com/r/${subreddit}/comments/${postId}/${postTitle}/`
